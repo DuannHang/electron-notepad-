@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>NotePad++</title>
+    <link rel="stylesheet" href="./static/css/index.css">
+</head>
+
+<body>
+    <textarea id="textArea" cols="30" rows="10"></textarea>
+</body>
+
+<link rel=stylesheet href="static/codemirror/doc/docs.css">
+<link rel="stylesheet" href="static/codemirror/lib/codemirror.css">
+<script src="static/codemirror/lib/codemirror.js"></script>
+<script src="static/codemirror/addon/selection/selection-pointer.js"></script>
+<script src="static/codemirror/mode/xml/xml.js"></script>
+<script src="static/codemirror/mode/javascript/javascript.js"></script>
+<script src="static/codemirror/mode/css/css.js"></script>
+<script src="static/codemirror/mode/vbscript/vbscript.js"></script>
+<script src="static/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="./renderer/ipcRenderer.js"></script>
+<script>
+    // Define an extended mixed-mode that understands vbscript and
+    // leaves mustache/handlebars embedded templates in html mode
+    var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{
+            matches: /\/x-handlebars-template|\/x-mustache/i,
+            mode: null
+        }, {
+            matches: /(text|application)\/(x-)?vb(a|script)/i,
+            mode: "vbscript"
+        }]
+    };
+    var editor = CodeMirror.fromTextArea(document.getElementById("textArea"), {
+        mode: mixedMode,
+        selectionPointer: true
+    });
+</script>
+<style>
+    .CodeMirror {
+        height: 100%;
+        margin-left: 15px;
+        margin-top: 5px;
+        background: rgb(241, 235, 235);
+    }
+</style>
+
+</html>
